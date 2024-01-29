@@ -85,6 +85,10 @@ function tensorcontract_structure(pC::Index2Tuple,
 end
 
 function tensoralloc(ttype, structure, istemp=false, backend::Backend...)
+    @info begin
+        mem_bytes = dim(structure) * sizeof(ttype)
+        "allocating tensor with $(Base.format_bytes(mem_bytes))\n(structure $structure)"
+    end
     C = ttype(undef, structure)
     # fix an issue with undefined references for strided arrays
     if !isbitstype(scalartype(ttype))
